@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,6 +33,8 @@ ALLOWED_HOSTS = ['93.120.230.14', '127.0.0.1', '10.50.0.48']
 
 INSTALLED_APPS = [
     'iHerbServer',
+    'jet',
+    'jet.dashboard',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.admin',
@@ -91,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'iherb_db',
         'USER': 'postgres',
-        'PASSWORD': 'b4hxd6u7',
+        'PASSWORD': 'ghjujyland',
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }
@@ -140,3 +143,18 @@ AUTH_USER_MODEL = 'iHerbServer.User'
 
 GOOGLE_OAUTH2_CLIENT_ID = '5513733846958mim3m584h44atf8isaiban1smotmgnl.apps.googleusercontent.com'
 GOOGLE_OAUTH2_CLIENT_SECRET = 'gX-Saf8uhskv1KRMST8F6oVE'
+
+JET_DEFAULT_THEME = 'default'
+JET_THEMES = [
+    {
+        'theme': 'default',  # theme folder name
+        'color': '#458500',  # color of the theme's button in user menu
+        'title': 'Default'  # theme title
+    }
+]
+JET_SIDE_MENU_COMPACT = True
+JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
+    {'label': _('Основные'), 'items': [
+        {'name': 'iHerbServer.User'},
+    ]},
+]

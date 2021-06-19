@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers, exceptions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.utils.translation import gettext_lazy as _
-from iHerbServer.models import User
+from iHerbServer.models import User, Question, Answer
 
 
 class CustomAuthTokenSerializer(AuthTokenSerializer):
@@ -55,8 +55,17 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-# class GetQuestionSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('email', 'password', 'first_name', 'last_name', 'phone')
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ("id", "name", "tags_for_choose")
+
+
+class GetQuestionSerializer(serializers.ModelSerializer):
+
+    answers = AnswerSerializer(many=True)
+
+    class Meta:
+        model = Question
+        fields = ("id", "question", "answers", "is_final")
 

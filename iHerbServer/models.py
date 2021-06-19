@@ -49,6 +49,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to='iHerbServer/user_avatars/', null=True, blank=True, verbose_name='Фото',
                                default='/iHerbServer/user_avatars/default_avatar.png')
 
+    tags = models.ManyToManyField("BADTag", related_name="users", verbose_name="Теги для пользователя")
+
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -79,6 +81,7 @@ class Question(models.Model):
     question = models.CharField(max_length=255, verbose_name="Вопрос", null=False)
     answers = models.ManyToManyField('Answer', related_name='Questions', verbose_name='Варианты ответов')
     priority = models.IntegerField(verbose_name='Приоритет вопроса (для порядка вопросов)', null=False)
+    is_final = models.BooleanField(verbose_name="Финальный вопрос", null=True, default=False)
 
     class Meta:
         verbose_name = 'Вопрос'
@@ -89,6 +92,7 @@ class Answer(models.Model):
     name = models.CharField(max_length=255, verbose_name="Ответ", null=False)
     tags_for_choose = models.ManyToManyField("BADTag", related_name='Answers',
                                              verbose_name='Тэги БАДов для подбора БАДа')
+    next_question = models.ForeignKey("Question", on_delete=models.CASCADE, related_name="parent_answer", null=True)
 
     def __str__(self):
         return self.name

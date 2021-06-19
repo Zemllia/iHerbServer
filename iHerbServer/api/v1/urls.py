@@ -11,6 +11,7 @@ from iHerbServer.schema import CoreAPISchemaGenerator
 router = routers.SimpleRouter()
 router.register(r'user', main_views.UserViewSet)
 router.register(r'register', main_views.UserRegisterView)
+router.register(r'get-question', main_views.GetQuestionView)
 
 api_urlpatterns = router.urls + [
     url(r'^auth/', UserCodeLoginView.as_view()),

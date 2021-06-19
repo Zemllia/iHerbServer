@@ -158,5 +158,6 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
         {'name': 'iHerbServer.user'},
         {'name': 'iHerbServer.bad'},
         {'name': 'iHerbServer.question'},
+        {'label': _('API Документация'), 'url': '/doc', 'url_blank': True},
     ]},
 ]

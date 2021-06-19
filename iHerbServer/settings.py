@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'iherb_db',
         'USER': 'postgres',
-        'PASSWORD': 'ghjujyland',
+        'PASSWORD': 'b4hxd6u7',
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }

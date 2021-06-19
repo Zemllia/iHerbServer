@@ -25,7 +25,7 @@ SECRET_KEY = 'oqfycml#!sjyg2qz9!4_y)7_-0n&&g+5uecu0i1r+_s3&mn^l&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['93.120.230.14', '127.0.0.1', '10.50.0.48']
 
 
 # Application definition
@@ -72,6 +72,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'iHerbServer.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -127,3 +137,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'iHerbServer.User'
+
+GOOGLE_OAUTH2_CLIENT_ID = '5513733846958mim3m584h44atf8isaiban1smotmgnl.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'gX-Saf8uhskv1KRMST8F6oVE'

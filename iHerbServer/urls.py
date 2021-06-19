@@ -14,8 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from rest_framework.documentation import include_docs_urls
+from .schema import CoreAPISchemaGenerator
+import iHerbServer.api.v1.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('doc/', include_docs_urls(title='API', authentication_classes=[], permission_classes=[],
+                                   generator_class=CoreAPISchemaGenerator)),
+    path('api/v1/', include(iHerbServer.api.v1.urls.api_urlpatterns)),
 ]

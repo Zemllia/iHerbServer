@@ -109,6 +109,7 @@ class GetQuestionView(viewsets.GenericViewSet):
 
     def list(self, request, *args, **kwargs):
         if not request.GET.get("last_question_id"):
+            request.user.tags.clear()
             the_biggest_question = self.queryset[0]
             for question in self.queryset:
                 if question.priority > the_biggest_question.priority:
@@ -145,3 +146,34 @@ class GetQuestionView(viewsets.GenericViewSet):
             chosen_question = the_biggest_question
 
         return Response(GetQuestionSerializer(chosen_question).data, status=status.HTTP_200_OK)
+
+
+class GetFinalQuestionView(viewsets.GenericViewSet):
+    serializer_class = GetQuestionSerializer
+    queryset = Question.objects.all()
+    permission_classes = (AllowAny, )
+
+    def list(self, request, *args, **kwargs):
+        if not request.GET.get("last_question_id"):
+            return Response({"status": "error", "message": "No given id"}, status=status.HTTP_400_BAD_REQUEST)
+        last_question_id = int(request.GET.get("last_question_id")[0])
+        last_question_answer_id = int(request.GET.get("last_answer_id")[0])
+        try:
+            question = Question.objects.get(id=last_question_id)
+        except Exception as e:
+            print(e)
+            return Response({"status": "error", "message": "No question with given id"},
+                            status=status.HTTP_400_BAD_REQUEST)
+        try:
+            selected_answer = question.answers.get(id=last_question_answer_id)
+        except Exception as e:
+            print(e)
+            return Response({"status": "error", "message": "No answer with given id in question"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        selected_answer_tags = selected_answer.tags_for_choose.all()
+
+        for tag in selected_answer_tags:
+            request.user.tags.add(tag)
+
+        return Response({"status": "success"}, status=status.HTTP_200_OK)

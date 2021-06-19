@@ -82,25 +82,51 @@ class Question(models.Model):
     answers = models.ManyToManyField('Answer', related_name='Questions', verbose_name='Варианты ответов')
     priority = models.IntegerField(verbose_name='Приоритет вопроса (для порядка вопросов)', null=False)
 
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
+
 
 class Answer(models.Model):
     name = models.CharField(max_length=255, verbose_name="Ответ", null=False)
     tags_for_choose = models.ManyToManyField("BADTag", related_name='Answers',
                                              verbose_name='Тэги БАДов для подбора БАДа')
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
+
 
 class BAD(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название", null=False)
     description = models.TextField(verbose_name='Описание БАД')
-    images = models.ManyToManyField('BADImage', related_name='BAD', verbose_name='Изображения для БАД')
+    images = models.ManyToManyField('BADImage', related_name='BAD', verbose_name='Изображения для БАД', blank=True)
     shop_link = models.TextField(verbose_name='Ссылка на БАД в магазине iHerb')
     tags = models.ManyToManyField("BADTag", related_name='BADs', verbose_name='Теги')
+
+    class Meta:
+        verbose_name = 'БАД'
+        verbose_name_plural = 'БАДы'
 
 
 class BADImage(models.Model):
     image = models.ImageField(upload_to='iHerbServer/bad_images/', null=True, blank=True, verbose_name='Изображение',
                               default='/iHerbServer/bad_images/default_bad_image.png')
 
+    class Meta:
+        verbose_name = 'Изображение БАДа'
+        verbose_name_plural = 'Изображения БАДов'
+
 
 class BADTag(models.Model):
     name = models.CharField(verbose_name="Называние тега для пометки БАДа", max_length=255, null=False)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Тэг БАДа'
+        verbose_name_plural = 'Тэги БАДов'

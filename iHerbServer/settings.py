@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -157,6 +157,6 @@ JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
     {'label': _('Основные'), 'items': [
         {'name': 'iHerbServer.user'},
         {'name': 'iHerbServer.bad'},
-        {'name': 'iHerbServer.Answer'},
+        {'name': 'iHerbServer.question'},
     ]},
 ]

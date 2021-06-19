@@ -1,4 +1,4 @@
 django==2.2.2
 psycopg2
-django-rest-framework
 Pillow
+djangorestframework~=3.12.4

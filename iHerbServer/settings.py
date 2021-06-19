@@ -155,6 +155,8 @@ JET_THEMES = [
 JET_SIDE_MENU_COMPACT = True
 JET_SIDE_MENU_ITEMS = [  # A list of application or custom item dicts
     {'label': _('Основные'), 'items': [
-        {'name': 'iHerbServer.User'},
+        {'name': 'iHerbServer.user'},
+        {'name': 'iHerbServer.bad'},
+        {'name': 'iHerbServer.Answer'},
     ]},
 ]

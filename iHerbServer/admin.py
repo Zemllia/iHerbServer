@@ -36,7 +36,6 @@ class BADTagAdmin(admin.ModelAdmin):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = [
-        'name'
     ]
 
 

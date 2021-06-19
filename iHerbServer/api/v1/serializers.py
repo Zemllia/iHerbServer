@@ -14,21 +14,11 @@ class CustomAuthTokenSerializer(AuthTokenSerializer):
         style={'input_type': 'password'},
         trim_whitespace=False
     )
-    phone = serializers.CharField(label=_("Phone"), required=False)
     # uuid = serializers.CharField(label=_("UUID"), required=False)
 
     def validate(self, attrs):
         username = attrs.get('username')
         password = attrs.get('password')
-        phone = attrs.get('phone')
-        if phone:
-            username = User.objects.filter(phone=int(phone)).first()
-            user = authenticate(request=self.context.get('request'), username=str(username), password=password)
-            if not user:
-                msg = _('Unable to log in with provided credentials')
-                raise serializers.ValidationError(msg, code='authorization')
-            attrs['user'] = user
-            return attrs
         if username and password:
             user = authenticate(request=self.context.get('request'),
                                 username=username, password=password)
@@ -39,7 +29,7 @@ class CustomAuthTokenSerializer(AuthTokenSerializer):
                 msg = _('Unable to log in with provided credentials.')
                 raise serializers.ValidationError(msg, code='authorization')
         else:
-            msg = _('Must include "username" or "phone" and "password".')
+            msg = _('Must include "username".')
             raise serializers.ValidationError(msg, code='authorization')
 
         attrs['user'] = user
@@ -50,7 +40,7 @@ class CustomAuthTokenSerializer(AuthTokenSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'password', 'first_name', 'last_name', 'phone')
+        fields = ('email', 'password', 'first_name', 'last_name')
 
     def create(self, validated_data):
         """try:
@@ -63,4 +53,10 @@ class UserSerializer(serializers.ModelSerializer):
         user.changeUserInfoDelay = datetime.date.today()
         user.save()
         return user
+
+
+# class GetQuestionSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('email', 'password', 'first_name', 'last_name', 'phone')
 

@@ -50,7 +50,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField('Фамилия', max_length=30, blank=True)
     avatar = models.ImageField(upload_to='iHerbServer/user_avatars/', null=True, blank=True, verbose_name='Фото',
                                default='/iHerbServer/user_avatars/default_avatar.png')
-    uuid = models.CharField('UUID', max_length=255, null=True)
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
@@ -76,3 +75,32 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
+
+
+class Question(models.Model):
+    question = models.CharField(max_length=255, verbose_name="Вопрос", null=False)
+    answers = models.ManyToManyField('Answer', related_name='Questions', verbose_name='Варианты ответов')
+    priority = models.IntegerField(verbose_name='Приоритет вопроса (для порядка вопросов)', null=False)
+
+
+class Answer(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Ответ", null=False)
+    tags_for_choose = models.ManyToManyField("BADTag", related_name='Answers',
+                                             verbose_name='Тэги БАДов для подбора БАДа')
+
+
+class BAD(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название", null=False)
+    description = models.TextField(verbose_name='Описание БАД')
+    images = models.ManyToManyField('BADImage', related_name='BAD', verbose_name='Изображения для БАД')
+    shop_link = models.TextField(verbose_name='Ссылка на БАД в магазине iHerb')
+    tags = models.ManyToManyField("BADTag", related_name='BADs', verbose_name='Теги')
+
+
+class BADImage(models.Model):
+    image = models.ImageField(upload_to='iHerbServer/bad_images/', null=True, blank=True, verbose_name='Изображение',
+                              default='/iHerbServer/bad_images/default_bad_image.png')
+
+
+class BADTag(models.Model):
+    name = models.CharField(verbose_name="Называние тега для пометки БАДа", max_length=255, null=False)

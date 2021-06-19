@@ -53,16 +53,6 @@ class UserCodeLoginView(APIView):
                         description="Valid password for authentication",
                     ),
                 ),
-                # remove
-                coreapi.Field(
-                    name="UUID",
-                    required=False,
-                    location='form',
-                    schema=coreschema.String(
-                        title="UUID",
-                        description="Valid UUID of device",
-                    ),
-                ),
                 coreapi.Field(
                     name="phone",
                     required=False,

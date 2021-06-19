@@ -22,7 +22,7 @@ from .schema import CoreAPISchemaGenerator
 import iHerbServer.api.v1.urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
     path('doc/', include_docs_urls(title='API', authentication_classes=[], permission_classes=[],
                                    generator_class=CoreAPISchemaGenerator)),
     path('api/v1/', include(iHerbServer.api.v1.urls.api_urlpatterns)),

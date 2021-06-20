@@ -26,6 +26,7 @@ urlpatterns = [
     path('doc/', include_docs_urls(title='API', authentication_classes=[], permission_classes=[],
                                    generator_class=CoreAPISchemaGenerator)),
     path('api/v1/', include(iHerbServer.api.v1.urls.api_urlpatterns)),
+    path('test/', include('allauth.urls')),
     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
 ]

@@ -42,8 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +80,29 @@ TEMPLATES = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '5513733846958mim3m584h44atf8isaiban1smotmgnl.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'gX-Saf8uhskv1KRMST8F6oVE'
+
 WSGI_APPLICATION = 'iHerbServer.wsgi.application'
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -97,7 +125,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'iherb_db',
         'USER': 'postgres',
-        'PASSWORD': 'ghjujyland',
+        'PASSWORD': 'b4hxd6u7',
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }
@@ -144,8 +172,6 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'iHerbServer.User'
 
-GOOGLE_OAUTH2_CLIENT_ID = '5513733846958mim3m584h44atf8isaiban1smotmgnl.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'gX-Saf8uhskv1KRMST8F6oVE'
 
 JET_DEFAULT_THEME = 'default'
 JET_THEMES = [
